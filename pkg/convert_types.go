@@ -92,7 +92,6 @@ func SchemaPropsToJSONProps(schema *spec.Schema, openapiSpec map[string]common.O
 		Ref:              ref,
 		ID:               schemaProps.ID,
 		Schema:           extensionsobj.JSONSchemaURL(string(schema.Schema)),
-		Description:      schemaProps.Description,
 		Type:             StringOrArrayToString(schemaProps.Type),
 		Format:           schemaProps.Format,
 		Title:            schemaProps.Title,
