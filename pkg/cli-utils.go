@@ -104,15 +104,6 @@ func NewCustomResourceDefinition(config Config) *extensionsobj.CustomResourceDef
 				Categories: config.Categories,
 				ShortNames: config.ShortNames,
 			},
-			Subresources: &extensionsobj.CustomResourceSubresources{
-				Status: &extensionsobj.CustomResourceSubresourceStatus {
-				},
-				Scale: &extensionsobj.CustomResourceSubresourceScale {
-					SpecReplicasPath:	config.SpecReplicasPath,
-					StatusReplicasPath:	config.StatusReplicasPath,
-					LabelSelectorPath:	&config.LabelSelectorPath,
-				},
-			},
 		},
 	}
 
