@@ -124,7 +124,7 @@ func NewCustomResourceDefinition(config Config) *extensionsobj.CustomResourceDef
 		crv.Schema = GetCustomResourceValidation(config.SpecDefinitionName, config.GetOpenAPIDefinitions)
 	}
 
-	crd.versions = []extensionsobj.CustomResourceDefinitionVersion{crv}
+	crd.Versions = []extensionsobj.CustomResourceDefinitionVersion{crv}
 	return crd
 }
 
