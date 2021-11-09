@@ -96,22 +96,25 @@ func NewCustomResourceDefinition(config Config) *extensionsobj.CustomResourceDef
 		TypeMeta: CustomResourceDefinitionTypeMeta,
 		Spec: extensionsobj.CustomResourceDefinitionSpec{
 			Group:   config.Group,
-			Version: config.Version,
+			Versions: []extensionsobj.CustomResourceDefinitionVersion{
+				{
+					Name: config.Version,
+					Subresources: &extensionsobj.CustomResourceSubresources{
+						Status: &extensionsobj.CustomResourceSubresourceStatus {
+						},
+						Scale: &extensionsobj.CustomResourceSubresourceScale {
+							SpecReplicasPath:	config.SpecReplicasPath,
+							StatusReplicasPath:	config.StatusReplicasPath,
+							LabelSelectorPath:	&config.LabelSelectorPath,
+						},
+					},},
+			},
 			Scope:   extensionsobj.ResourceScope(config.ResourceScope),
 			Names: extensionsobj.CustomResourceDefinitionNames{
 				Plural:     config.Plural,
 				Kind:       config.Kind,
 				Categories: config.Categories,
 				ShortNames: config.ShortNames,
-			},
-			Subresources: &extensionsobj.CustomResourceSubresources{
-				Status: &extensionsobj.CustomResourceSubresourceStatus {
-				},
-				Scale: &extensionsobj.CustomResourceSubresourceScale {
-					SpecReplicasPath:	config.SpecReplicasPath,
-					StatusReplicasPath:	config.StatusReplicasPath,
-					LabelSelectorPath:	&config.LabelSelectorPath,
-				},
 			},
 		},
 	}
