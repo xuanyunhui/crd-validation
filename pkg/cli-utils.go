@@ -96,19 +96,7 @@ func NewCustomResourceDefinition(config Config) *extensionsobj.CustomResourceDef
 		TypeMeta: CustomResourceDefinitionTypeMeta,
 		Spec: extensionsobj.CustomResourceDefinitionSpec{
 			Group:   config.Group,
-			Versions: []extensionsobj.CustomResourceDefinitionVersion{
-				{
-					Name: config.Version,
-					Subresources: &extensionsobj.CustomResourceSubresources{
-						Status: &extensionsobj.CustomResourceSubresourceStatus {
-						},
-						Scale: &extensionsobj.CustomResourceSubresourceScale {
-							SpecReplicasPath:	config.SpecReplicasPath,
-							StatusReplicasPath:	config.StatusReplicasPath,
-							LabelSelectorPath:	&config.LabelSelectorPath,
-						},
-					},},
-			},
+
 			Scope:   extensionsobj.ResourceScope(config.ResourceScope),
 			Names: extensionsobj.CustomResourceDefinitionNames{
 				Plural:     config.Plural,
@@ -119,10 +107,24 @@ func NewCustomResourceDefinition(config Config) *extensionsobj.CustomResourceDef
 		},
 	}
 
-	if config.SpecDefinitionName != "" && config.EnableValidation == true {
-		crd.Spec.Validation = GetCustomResourceValidation(config.SpecDefinitionName, config.GetOpenAPIDefinitions)
+	crv := extensionsobj.CustomResourceDefinitionVersion{
+			Name: config.Version,
+			Subresources: &extensionsobj.CustomResourceSubresources{
+				Status: &extensionsobj.CustomResourceSubresourceStatus {
+				},
+				Scale: &extensionsobj.CustomResourceSubresourceScale {
+					SpecReplicasPath:	config.SpecReplicasPath,
+					StatusReplicasPath:	config.StatusReplicasPath,
+					LabelSelectorPath:	&config.LabelSelectorPath,
+				},
+			},
 	}
 
+	if config.SpecDefinitionName != "" && config.EnableValidation == true {
+		crv.Schema = GetCustomResourceValidation(config.SpecDefinitionName, config.GetOpenAPIDefinitions)
+	}
+
+	crd.versions = []extensionsobj.CustomResourceDefinitionVersion{crv}
 	return crd
 }
 
