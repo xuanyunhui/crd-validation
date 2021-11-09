@@ -2,7 +2,7 @@ package crdvalidation
 
 import (
 	"fmt"
-	spec "github.com/go-openapi/spec"
+	spec "k8s.io/kube-openapi/pkg/validation/spec"
 	extensionsobj "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	common "k8s.io/kube-openapi/pkg/common"
 )
